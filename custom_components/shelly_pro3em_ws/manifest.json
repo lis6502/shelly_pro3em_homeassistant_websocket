@@ -5,6 +5,7 @@
   "config_flow": true,
   "documentation": "https://shelly-api-docs.shelly.cloud/gen2/Devices/Gen2/ShellyPro3EM",
   "iot_class": "local_push",
-  "version": "0.1.0",
-  "requirements": []
+  "issue_tracker": "https://github.com/lis6502/shelly_pro3em_homeassistant_websocket/issues",
+  "requirements": [],
+  "version": "0.2.0"
 }

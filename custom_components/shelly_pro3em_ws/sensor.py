@@ -17,6 +17,7 @@ from homeassistant.const import (
     UnitOfApparentPower,
     UnitOfElectricCurrent,
     UnitOfElectricPotential,
+    UnitOfEnergy,
     UnitOfFrequency,
     UnitOfPower,
 )
@@ -134,6 +135,31 @@ for _phase, _label in (("a", "A"), ("b", "B"), ("c", "C")):
             entity_registry_enabled_default=False,
             value_fn=lambda d, k=f"{_phase}_freq": _num(d, k),
         ),
+    )
+
+
+def _energy(key: str, name: str, enabled: bool = True) -> EmSensorDescription:
+    return EmSensorDescription(
+        key=key,
+        name=name,
+        native_unit_of_measurement=UnitOfEnergy.WATT_HOUR,
+        suggested_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
+        suggested_display_precision=3,
+        device_class=SensorDeviceClass.ENERGY,
+        state_class=SensorStateClass.TOTAL_INCREASING,
+        entity_registry_enabled_default=enabled,
+        value_fn=lambda d, k=key: _num(d, k),
+    )
+
+
+SENSORS += (  # type: ignore[assignment]
+    _energy("total_act", "Total energy imported"),
+    _energy("total_act_ret", "Total energy exported"),
+)
+for _phase, _label in (("a", "A"), ("b", "B"), ("c", "C")):
+    SENSORS += (  # type: ignore[assignment]
+        _energy(f"{_phase}_total_act_energy", f"Phase {_label} energy imported", False),
+        _energy(f"{_phase}_total_act_ret_energy", f"Phase {_label} energy exported", False),
     )
 
 

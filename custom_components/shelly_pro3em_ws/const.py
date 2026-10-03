@@ -28,3 +28,15 @@ EM_KEYS = (
     "total_aprt_power",
     "total_current",
 )
+
+# Energy counters (Wh), pushed every ~60 s under params["emdata:0"].
+EMDATA_KEYS = (
+    "a_total_act_energy",
+    "a_total_act_ret_energy",
+    "b_total_act_energy",
+    "b_total_act_ret_energy",
+    "c_total_act_energy",
+    "c_total_act_ret_energy",
+    "total_act",
+    "total_act_ret",
+)

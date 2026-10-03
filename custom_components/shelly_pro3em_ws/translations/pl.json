@@ -1,0 +1,20 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Shelly Pro 3EM WebSocket",
+        "description": "Podaj lokalny adres IP zablokowanego Pro 3EM. Używany jest wyłącznie nieuwierzytelniony WebSocket /rpc (tylko odczyt).",
+        "data": {
+          "host": "Adres IP"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Nie można połączyć się z /shelly pod tym adresem",
+      "not_pro3em": "To urządzenie nie wygląda na Pro 3EM"
+    },
+    "abort": {
+      "already_configured": "To urządzenie jest już skonfigurowane"
+    }
+  }
+}

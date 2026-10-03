@@ -12,7 +12,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
-from .const import DOMAIN, EM_KEYS
+from .const import DOMAIN, EM_KEYS, EMDATA_KEYS
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -96,17 +96,21 @@ class ShellyWsCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             return
         params = frame.get("params") or {}
         em = params.get("em:0")
-        if not isinstance(em, dict):
+        emdata = params.get("emdata:0")
+        if not isinstance(em, dict) and not isinstance(emdata, dict):
             return
 
         changed = False
         merged = dict(self.data)
-        for key in EM_KEYS:
-            if key in em:
-                val = em[key]
-                if merged.get(key) != val:
-                    merged[key] = val
-                    changed = True
+        for block, keys in ((em, EM_KEYS), (emdata, EMDATA_KEYS)):
+            if not isinstance(block, dict):
+                continue
+            for key in keys:
+                if key in block:
+                    val = block[key]
+                    if merged.get(key) != val:
+                        merged[key] = val
+                        changed = True
         if "ts" in params:
             merged["ts"] = params["ts"]
         if changed:
